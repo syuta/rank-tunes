@@ -54,23 +54,25 @@
     </nav>
 
     <section>
-        <img id="mediaImg"/>
+        <img id="mediaImg" width="130" height="130"/>
         <span id="infomation"></span>
         <hr/>
 
-        <table id="rankTable" height="100px" class="table table-hover table-striped table-bordered table-condensed">
-            <thead>
+        <div class="span3 table-wrapper">
+            <table id="rankTable" class="table table-hover table-striped table-bordered table-condensed table-fixedheader">
+            <thead class="scrollHead">
                 <tr>
-                    <th></th>
-                    <th>#</th>
-                    <th>Title</th>
-                    <th>Artist</th>
+                    <th width="25px"></th>
+                    <th width="35px">#</th>
+                    <th width="170px">Title</th>
+                    <th width="260px">Artist</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="scrollBody">
             </tbody>
         </table>
+            </div>
     </section>
-		
+
 	</body>
 </html>

@@ -49,14 +49,14 @@ $( function() {
             }
 
             if(cMedia) {
-                //再生している曲に▶をつける
+                //再生している曲に▶/〓をつける
+                var mark =  "";
                 if(cMedia.status === "play") {
-                    $("#rankTable tr").each(function() {
-                        if(cMedia.media.id === $(this).attr("mediaId")) {
-                            $(this).find('td:first').text("▶");
-                        }
-                    });
+                    mark = "▶";
+                } else if(cMedia.status === "pause"){
+                    mark = "〓";
                 }
+                $("#rankTable tr[mediaId='"+ cMedia.media.id +"']").find('td:first').text(mark);
 
                 //選択中のメディア情報を表示
                 setCurrentMediaInfo(cMedia.media);
@@ -98,6 +98,7 @@ $( function() {
         });
     }
 
+
     /**
      * ランキング情報取得
      */
@@ -107,13 +108,14 @@ $( function() {
 
         var url = makeUrl();
         var mediaList = [];
-        $.get(url, function(xml){
-            $(xml).find("entry").each(function(i) {
-                var id = $(this).find('entry > id').attr("im:id");
-                var title = $(this).find('entry > name').text();
-                var previewLink = $(this).find('entry > link[rel="enclosure"]').attr("href");
-                var artist = $(this).find('entry > artist').text();
-                var img = $(this).find('entry > image[height="170"]').text();
+        $.getJSON(url, function(json){
+            for(var i = 0; i < json.feed.entry.length; i++) {
+                var item = json.feed.entry[i];
+                var id = item.id.attributes["im:id"];
+                var title = item["im:name"].label;
+                var previewLink = item.link[1].attributes.href;
+                var artist = item["im:artist"].label;
+                var img = item["im:image"][2].label;
                 var media = {
                     id:id,
                     count:i + 1,
@@ -124,12 +126,13 @@ $( function() {
                 };
                 mediaList.push(media);
                 addRow(media);
-            });
-
+            }
             chrome.runtime.getBackgroundPage(function(backgroundPage) {
                 var bgp = backgroundPage.background;
                 bgp.setMediaList(mediaList);
             });
+
+
         });
     });
 
@@ -171,7 +174,7 @@ $( function() {
                 //同じ曲が選択された場合
                 if(cMedia.status === "play") {
                     bgp.pauseMedia(selectedMedia);
-                    $(that).find('td:first').text("");
+                    $(that).find('td:first').text("〓");
                 } else {
                     bgp.playMedia(selectedMedia);
                     $(that).find('td:first').text("▶");
@@ -185,6 +188,7 @@ $( function() {
     });
 
 
+
     /**
      * 渡されたmediaオブジェクトの画像と情報を設定する
      * @param media mediaオブジェクト
@@ -192,7 +196,7 @@ $( function() {
     function setCurrentMediaInfo(media) {
         if(media) {
             $("#mediaImg").attr("src",media.img);
-            $("#infomation").html("<b>" + media.artist + "&nbsp;" + media.title + "</b");
+            $("#infomation").html("<b>" + media.artist + "&nbsp;/&nbsp;" + media.title + "</b");
         } else {
             $("#mediaImg").attr("src","");
             $("#infomation").html("");
@@ -209,9 +213,9 @@ $( function() {
         var searchUrl = SEARCH_URL_BASE + feedType + "/limit=" + $("#size").val();
         var genre = $("#genre").val();
         if(genre === "ALL") {
-            searchUrl += "/xml";
+            searchUrl += "/json";
         } else {
-            searchUrl += "/genre=" + $("#genre").val() + "/xml";
+            searchUrl += "/genre=" + $("#genre").val() + "/json";
         }
         return searchUrl;
     };
@@ -223,10 +227,10 @@ $( function() {
     function addRow(media) {
         $('#rankTable').append(
             '<tr mediaId="' + media.id + '">' +
-            '<td>&nbsp;&nbsp;&nbsp;</td>' +
-            '<td>' + media.count + '</td>' +
-            '<td>' + media.title + '</td>' +
-            '<td>' + media.artist +'</td>' +
+            '<td width="25px">&nbsp;&nbsp;&nbsp;</td>' +
+            '<td width="28px">' + media.count + '</td>' +
+            '<td width="170px">' + media.title + '</td>' +
+            '<td width="260px">' + media.artist +'</td>' +
             '</tr>');
     };
 
