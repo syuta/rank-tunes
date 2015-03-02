@@ -27,7 +27,7 @@ $( function() {
                     });
                     setCurrentMediaInfo(cMedia.media);
 
-                    var response = {result: "ok"};
+                    var response = {data: "ok"};
                     sendResponse(response);
                 });
             }
@@ -64,39 +64,6 @@ $( function() {
 
         });
     };
-
-    function audioEnded() {
-        chrome.runtime.getBackgroundPage(function(backgroundPage) {
-            var bgp = backgroundPage.background;
-            var cMedia = bgp.getCurrentMedia();
-            var mList = bgp.getMediaList();
-            if(cMedia) {
-                for(var i = 0; i < mList.length;i++) {
-                    if(mList[i].id === cMedia.media.id) {
-                        if( i < mList.length - 1) {
-                            //次のメディア
-                            var nextMedia = mList[i + 1];
-                            cMedia = bgp.playMedia(nextMedia);
-                        } else {
-                            //リスト最初のメディア
-                            cMedia = bgp.playMedia(mList[0]);
-                        }
-
-                        //再生したメディアに矢印設定
-                        $("#rankTable tr").each(function() {
-                            if(cMedia.media.id === $(this).attr("mediaId")) {
-                                $(this).find('td:first').text("▶");
-                            } else {
-                                $(this).find('td:first').text("　");
-                            }
-                        });
-                        setCurrentMediaInfo(cMedia.media);
-                        break;
-                    }
-                }
-            }
-        });
-    }
 
 
     /**
@@ -196,7 +163,7 @@ $( function() {
     function setCurrentMediaInfo(media) {
         if(media) {
             $("#mediaImg").attr("src",media.img);
-            $("#infomation").html("<b>" + media.artist + "&nbsp;/&nbsp;" + media.title + "</b");
+            $("#infomation").html("<b>" + media.artist + "</br>" + media.title + "</b>");
         } else {
             $("#mediaImg").attr("src","");
             $("#infomation").html("");

@@ -25,8 +25,8 @@ Background.prototype = {
                 }
             }
             //UI更新のためメッセージ送信
-            chrome.runtime.sendMessage({name: "audioEnded"}, function(response) {
-                console.log("result:" + response.result);
+            chrome.runtime.sendMessage({name: "audioEnded"}, function() {
+                console.log("get response.");
             });
         });
     },

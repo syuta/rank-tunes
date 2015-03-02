@@ -19,60 +19,82 @@
 	
 	<body>
 
-    <nav class="navbar navbar-default" role="navigation">
-        <div class="container-fluid">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar navbar-default" role="navigation">
+                    <div class="container-fluid">
 
-            <div class="collapse navbar-collapse">
-                <!-- いまのところ指定する必要なし
-                type:
-                <select id="feedType" class="selectpicker">
-                    <option value="topsongs">Top Songs</option>
-                </select>
-                &nbsp;
-                -->
-                size:
-                <select id="size" class="selectpicker">
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
-                </select>
-                &nbsp;
-                Genre:
-                <select id="genre" class="selectpicker">
-                    <option value="All">All</option>
-                    <option value="27">J-pop</option>
-                    <option value="11">Jazz</option>
-                    <option value="21">Rock</option>
-                    <option value="29">anime</option>
-                </select>
-                &nbsp;
-                <button id="getBtn" type="button" class="btn btn-default btn-sm navbar-btn">Get</button>
-                <button id="clearBtn" type="button" class="btn btn-default btn-sm navbar-btn">Clear</button>
+                        <div class="collapse navbar-collapse">
+                            <!-- いまのところ指定する必要なし
+                            type:
+                            <select id="feedType" class="selectpicker">
+                                <option value="topsongs">Top Songs</option>
+                            </select>
+                            &nbsp;
+                            -->
+                            size:
+                            <select id="size" class="selectpicker">
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                            &nbsp;
+                            Genre:
+                            <select id="genre" class="selectpicker">
+                                <option value="All">All</option>
+                                <option value="27">J-pop</option>
+                                <option value="11">Jazz</option>
+                                <option value="21">Rock</option>
+                                <option value="29">anime</option>
+                            </select>
+                            &nbsp;
+                            <button id="getBtn" type="button" class="btn btn-default btn-sm navbar-btn">Get</button>
+                            <button id="clearBtn" type="button" class="btn btn-default btn-sm navbar-btn">Clear</button>
+                        </div>
+                    </div>
+                </nav>
+
+            </div>
+        </div><!--/.row-->
+        <div class="row">
+            <div class="col-md-12">
+            <section>
+                <table>
+                    <tr>
+                        <td>
+                            <img id="mediaImg" width="130" height="130"/>
+                        </td>
+                        <td>
+                            <span id="infomation"></span>
+                        </td>
+                    </tr>
+                </table>
+                <hr/>
+
+                <div class="span3 table-wrapper">
+                    <table id="rankTable" class="table table-hover table-striped table-bordered table-condensed table-fixedheader">
+                        <thead class="scrollHead">
+                        <tr>
+                            <th width="25px"></th>
+                            <th width="35px">#</th>
+                            <th width="170px">Title</th>
+                            <th width="260px">Artist</th>
+                        </tr>
+                        </thead>
+                        <tbody class="scrollBody">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
             </div>
         </div>
-    </nav>
 
-    <section>
-        <img id="mediaImg" width="130" height="130"/>
-        <span id="infomation"></span>
-        <hr/>
+    </div><!--/.container-->
 
-        <div class="span3 table-wrapper">
-            <table id="rankTable" class="table table-hover table-striped table-bordered table-condensed table-fixedheader">
-            <thead class="scrollHead">
-                <tr>
-                    <th width="25px"></th>
-                    <th width="35px">#</th>
-                    <th width="170px">Title</th>
-                    <th width="260px">Artist</th>
-                </tr>
-            </thead>
-            <tbody class="scrollBody">
-            </tbody>
-        </table>
-            </div>
-    </section>
+
+
 
 	</body>
 </html>
